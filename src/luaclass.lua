@@ -1,34 +1,41 @@
--- Taken from DCS Script directory and modified to not be a sealed
--- class
--- Provides mechanism like C++ classes and objects
+--[[
+local function callable(cls)
+	local inst = {}
+	for k,v in pairs(cls) do
+		inst[k] = v
+	end
+	setmetatable(inst, { __index = cls.__index })
+	return inst
+end
+--]]
 
---Lua-class metatable
-local LuaClass = {
-	--Provides access to functions in parent class
-	__index = function(class, funcName)
-		local parentClass = rawget(class, 'parentClass_')
-		if parentClass ~= nil then
-			return parentClass[funcName]
-		else
-			assert(false, 'Function '..funcName..' not found')
+local function callable(cls)
+	local inst = {}
+	setmetatable(inst, {__index = cls})
+	return inst
+end
+
+local baseclass = {
+	__call  = callable,
+	parent = function(self)
+		local p = getmetatable(self)
+		if nil == p then
+			return p
 		end
+		p = getmetatable(p.__index)
+		if nil == p then
+			return p
+		end
+		return p
 	end,
 }
 
---Dumy base class for all classes
-local voidClass = {
-	className_ = 'void',
-	parentClass = nil
-}
-
---Declares tbl as class with parent (multiple inheritance not allowed)
-local function class(tbl, parent)
-	parent = parent or voidClass
-	tbl.className_ = tbl.className_ or 'unknown ('..tostring(tbl)..')'
-	tbl.__index = tbl
-	assert(tbl ~= parent)
-	tbl.parentClass_ = parent
-	setmetatable(tbl, LuaClass)
+local function class(cls, parent)
+	parent = parent or baseclass
+	cls.classname_ = cls.classname_ or 'unknown ('..tostring(tbl)..')'
+	cls.__call  = callable
+	cls.__index = parent
+	setmetatable(cls, parent)
 end
 
 return class
