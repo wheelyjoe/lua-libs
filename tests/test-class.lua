@@ -1,66 +1,42 @@
 require("os")
 
-local class = require("luaclass")
-
-function printtable(t)
-	for k,v in pairs(t) do
-		print("key: ", k, "val: ", v, "type: ", type(v))
-	end
-end
+local class = require("class")
 
 function test()
-	local A = {
-		classname_ = "A",
-	}
+	local A = class()
 	function A:exec()
-		--print("A:exec()")
 		return "A"
 	end
-	class(A)
 
-	local B = {
-		classname_ = "B",
-	}
+	local B = class(A)
 	function B:exec()
-		--print("B:exec()")
-		local parent = self:parent()
 		local s = ""
-		if type(parent.exec) == "function" then
-			s = s .. parent:exec()
-			--print("first: '" .. s .. "'")
-		end
+		s = s .. self:super():exec()
 		s = s .. "B"
-		--print("second: '" .. s .. "'")
 		return s
 	end
-	class(B, A)
+
+	local C = class(B)
+	function C:exec()
+		local s = ""
+		s = s .. self:super():exec()
+		s = s .. "C"
+		return s
+	end
+
+	local J = class()
 
 	local a = A()
-	local b = B()
-
-	--print("a:")
-	--printtable(a)
-	--print("metatable(a):")
-	--printtable(getmetatable(a))
-	--print("metatable(a).__index:")
-	--printtable(getmetatable(a).__index)
-	--print("metatable(metatable(a).__index):")
-	--printtable(getmetatable(getmetatable(a).__index))
-	--print("==============")
-	--print("b:")
-	--printtable(b)
-	--print("metatable(b):")
-	--printtable(getmetatable(b))
-	--print("metatable(b).__index:")
-	--printtable(getmetatable(b).__index)
-	--print("metatable(metatable(b).__index):")
-	--printtable(getmetatable(getmetatable(b).__index))
-
-	b:exec()
-	a:exec()
-
 	assert(a:exec() == "A")
+
+	local b = B()
 	assert(b:exec() == "AB")
+
+	local c = C()
+	assert(c:exec() == "ABC")
+	assert(c:isa(C))
+	assert(c:isa(A))
+	assert(not c:isa(J))
 
 	return true
 end
