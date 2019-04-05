@@ -1,34 +1,36 @@
+local function shallowclone(tbl)
+	local t = {}
+
+	if tbl == nil then
+		return t
+	end
+	for k,v in pairs(tbl) do
+		t[k] = v
+	end
+	return t
+end
+
 local function class(base)
-	base = base or nil
-	local newcls = {}
+	local newcls = shallowclone(base)
 	local cls_mt = {
-		__call = function(cls)
-			local obj = {}
-			setmetatable(obj, { __index = cls })
-			return obj
+		__call = function(cls, ...)
+			local c = shallowclone(cls)
+			if type(c.__init) == "function" then
+				c.__init(c, ...)
+			end
+			return c
 		end,
-		__index = newcls,
 	}
-
-	setmetatable(newcls, cls_mt)
-	if nil ~= base then
-		setmetatable(newcls, { __call = cls_mt.__call, __index = base })
-	end
-
-	function newcls:class()
-		return newcls
-	end
 
 	function newcls:super()
 		return base
 	end
 
-	-- Return true if the caller is an instance of theClass
 	function newcls:isa(other)
 		local b_isa = false
 		local cur_class = newcls
 
-		while ( nil ~= cur_class ) and ( false == b_isa ) do
+		while nil ~= cur_class and false == b_isa do
 			if cur_class == other then
 				b_isa = true
 			else
@@ -38,6 +40,7 @@ local function class(base)
 		return b_isa
 	end
 
+	setmetatable(newcls, cls_mt)
 	return newcls
 end
 
