@@ -3,6 +3,6 @@ MAKEFLAGS = --no-print-directory
 LUA_PATH := $(CURDIR)/src/?.lua;;
 export LUA_PATH
 
-.PHONY: tests
-tests:
+.PHONY: check
+check:
 	@$(MAKE) -C tests
