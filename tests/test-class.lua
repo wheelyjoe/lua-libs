@@ -65,14 +65,6 @@ function test()
 	assert(not c:isa(J))
 	--printtable(c)
 
-	return true
+	return 0
 end
-
-r = "Failed"
-rc = 1
-if test() then
-	r = "Passed"
-	rc = 0
-end
-print(string.format("%s - Class Inheritance Test", r))
-os.exit(rc)
+os.exit(test())

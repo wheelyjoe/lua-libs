@@ -18,14 +18,6 @@ function test()
 	local a = A()
 	local b = B()
 
-	return true
+	return 0
 end
-
-r = "Failed"
-rc = 1
-if test() then
-	r = "Passed"
-	rc = 0
-end
-print(string.format("%s - Callable Test", r))
-os.exit(rc)
+os.exit(test())

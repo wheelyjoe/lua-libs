@@ -53,14 +53,6 @@ function test()
 	end
 
 	assert(pq:empty() == true, "pq, not empty")
-	return true
+	return 0
 end
-
-r = "Failed"
-rc = 1
-if test() then
-	r = "Passed"
-	rc = 0
-end
-print(string.format("%s - Priority Queue Tests", r))
-os.exit(rc)
+os.exit(test())
