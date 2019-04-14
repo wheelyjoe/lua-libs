@@ -1,6 +1,6 @@
 require("os")
 
-local class = require("class")
+local class = require("libs.class")
 
 function printtable(t)
 	print("name: ", t.__name)

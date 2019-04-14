@@ -1,6 +1,6 @@
 require "os"
 
-local PriorityQueue = require "containers.pqueue"
+local PriorityQueue = require("libs.containers.pqueue")
 
 function printtable(t)
 	for k,v in pairs(t) do

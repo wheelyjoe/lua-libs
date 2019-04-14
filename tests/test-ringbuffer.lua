@@ -1,6 +1,6 @@
 require "os"
 
-local RingBuffer = require "containers.ringbuffer"
+local RingBuffer = require("libs.containers.ringbuffer")
 
 function test()
 	local tests = {
