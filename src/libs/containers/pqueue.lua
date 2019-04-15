@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: LGPL-3.0
 --[[
 -- A min-heap priority queue implementation
 -- API:

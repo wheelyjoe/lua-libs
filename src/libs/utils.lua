@@ -1,3 +1,6 @@
+
+-- SPDX-License-Identifier: LGPL-3.0
+
 local utils = {}
 
 function utils.foreach(array, itr, fcn, ctx)
@@ -6,13 +9,16 @@ function utils.foreach(array, itr, fcn, ctx)
 	end
 end
 
-return utils
+function utils.shallowclone(tbl)
+	local t = {}
 
---[[
-function utils.debug(str)
-	if debug == nil then
-		return
+	if tbl == nil then
+		return t
 	end
-	print("DEBUG: "..str)
+	for k,v in pairs(tbl) do
+		t[k] = v
+	end
+	return t
 end
---]]
+
+return utils

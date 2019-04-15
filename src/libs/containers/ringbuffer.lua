@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: LGPL-3.0
 --[[
 -- Implements a standard fixed size ringbuffer
 -- API:
