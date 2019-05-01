@@ -21,4 +21,7 @@ function utils.shallowclone(tbl)
 	return t
 end
 
+-- return the directory seperator used for the given OS
+utils.sep = package.config:sub(1,1)
+
 return utils
