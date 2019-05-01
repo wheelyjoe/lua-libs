@@ -3,9 +3,9 @@
 
 local utils = {}
 
-function utils.foreach(array, itr, fcn, ctx)
+function utils.foreach(ctx, itr, fcn, array, arg)
 	for k, v in itr(array) do
-		fcn(k, v, ctx)
+		fcn(ctx, k, v, arg)
 	end
 end
 
