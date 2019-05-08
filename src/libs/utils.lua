@@ -21,6 +21,13 @@ function utils.shallowclone(tbl)
 	return t
 end
 
+function utils.mergetables(dest, source)
+	assert(type(dest) == "table", "dest must be a table")
+	for k, v in pairs(source or {}) do
+		dest[k] = v
+	end
+end
+
 -- return the directory seperator used for the given OS
 utils.sep = package.config:sub(1,1)
 
