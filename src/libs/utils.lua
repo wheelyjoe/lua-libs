@@ -9,16 +9,34 @@ function utils.foreach(ctx, itr, fcn, array, arg)
 	end
 end
 
-function utils.shallowclone(tbl)
-	local t = {}
+function utils.shallowclone(obj)
+	local obj_type = type(obj)
+	local copy
 
-	if tbl == nil then
-		return t
+	if obj_type == 'table' then
+		copy = {}
+		for k,v in pairs(obj) do
+			copy[k] = v
+		end
+	else
+		copy = obj
 	end
-	for k,v in pairs(tbl) do
-		t[k] = v
+	return copy
+end
+
+function utils.deepcopy(obj)
+	local obj_type = type(obj)
+	local copy
+
+	if obj_type == 'table' then
+		copy = {}
+		for k,v in next, obj, nil do
+			copy[k] = utils.deepcopy(v)
+		end
+	else
+		copy = obj
 	end
-	return t
+	return copy
 end
 
 function utils.mergetables(dest, source)

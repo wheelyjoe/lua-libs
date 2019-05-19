@@ -3,7 +3,7 @@
 local utils = require("libs.utils")
 
 local function class(base)
-	local newcls = utils.shallowclone(base)
+	local newcls = utils.shallowclone(base or {})
 	local cls_mt = {
 		__call = function(cls, ...)
 			local c = utils.shallowclone(cls)
