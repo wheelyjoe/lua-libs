@@ -44,6 +44,7 @@ function utils.mergetables(dest, source)
 	for k, v in pairs(source or {}) do
 		dest[k] = v
 	end
+	return dest
 end
 
 -- return the directory seperator used for the given OS
