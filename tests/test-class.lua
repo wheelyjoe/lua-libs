@@ -2,14 +2,7 @@ require("os")
 
 local class = require("libs.class")
 
-function printtable(t)
-	print("name: ", t.__name)
-	for k,v in pairs(t) do
-		print("index: ", k, "value: ", v, "type: ", type(v))
-	end
-end
-
-function test()
+local function test()
 	local A = class()
 	function A:__init(v)
 		self.val = v
@@ -47,15 +40,12 @@ function test()
 	local J = class()
 
 	local a = A(2)
-	--printtable(a)
 	assert(a:exec() == "A")
 	assert(a.val == 3)
 
 	local b = B(3)
-	--printtable(b)
 	assert(b:exec() == "AB")
 	assert(b.val == 4)
-	--printtable(b)
 	assert(a.val == 3)
 
 	local c = C(5)
@@ -63,7 +53,6 @@ function test()
 	assert(c:isa(C))
 	assert(c:isa(A))
 	assert(not c:isa(J))
-	--printtable(c)
 
 	return 0
 end
