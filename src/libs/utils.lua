@@ -59,6 +59,17 @@ function utils.readlua(file, tblname)
 	return data
 end
 
+function utils.readconfigs(cfgfiles, tbl)
+	for _, cfg in pairs(cfgfiles) do
+		tbl[cfg.name] = cfg.default
+		if lfs.attributes(cfg.file) ~= nil then
+			utils.mergetables(tbl[cfg.name],
+				cfg.validate(cfg,
+					utils.readlua(cfg.file, cfg.cfgtblname)))
+		end
+	end
+end
+
 -- return the directory seperator used for the given OS
 utils.sep = package.config:sub(1,1)
 
