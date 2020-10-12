@@ -65,7 +65,7 @@ function utils.readlua(file, tblname)
 		"contain expected symbol '%s'", file, tblname))
 	local data = _G[tblname]
 	_G[tblname] = nil
-	return data
+	return data, file
 end
 
 function utils.readconfigs(cfgfiles, tbl)
