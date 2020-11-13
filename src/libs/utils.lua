@@ -58,14 +58,15 @@ end
 
 function utils.readlua(file, tblname)
 	assert(file and type(file) == "string", "file path must be provided")
-	assert(tblname and type(tblname) == "string", "tblname must be provided")
-	assert(lfs.attributes(file) ~= nil, "file does not exist: "..file)
-	assert(pcall(dofile, file), "failed to parse: "..file)
-	assert(_G[tblname] ~= nil, string.format("parsing of '%s' didn't "..
-		"contain expected symbol '%s'", file, tblname))
-	local data = _G[tblname]
-	_G[tblname] = nil
-	return data, file
+	local f = assert(loadfile(file))
+	local config = {}
+	setfenv(f, config)
+	assert(pcall(f))
+	local tbl = config
+	if tblname ~= nil then
+		tbl = config[tblname]
+	end
+	return tbl, file
 end
 
 function utils.readconfigs(cfgfiles, tbl)
