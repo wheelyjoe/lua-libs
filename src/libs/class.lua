@@ -2,8 +2,12 @@
 
 local utils = require("libs.utils")
 
-local function class(base)
-	local newcls = utils.shallowclone(base)
+local function class(base, ...)
+	local newcls = utils.shallowclone(base or {})
+	for i = 1, select('#', ...) do
+		newcls = utils.mergetables(newcls,
+			utils.shallowclone(select(i, ...) or {}))
+	end
 	local cls_mt = {
 		__call = function(cls, ...)
 			local c = utils.shallowclone(cls)

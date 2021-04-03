@@ -6,9 +6,8 @@ local utils = require("libs.utils")
 local containers = require("libs.containers")
 
 local _G   = _G
-local _ENV = nil
 local libs = {
-	_VERSION     = "0.3",
+	_VERSION     = "1",
 	_DESCRIPTION = "libs: general functions that most common languages have",
 	_COPYRIGHT   = "Copyright (c) 2019 Jonathan Toppins",
 	class        = class,

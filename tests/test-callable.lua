@@ -6,7 +6,7 @@ local function callable(cls)
 	return inst
 end
 
-function test()
+local function test()
 	local A = {
 		__call = callable,
 	}
@@ -15,8 +15,8 @@ function test()
 	local B = {}
 	setmetatable(B, { __call = callable })
 
-	local a = A()
-	local b = B()
+	A()
+	B()
 
 	return 0
 end

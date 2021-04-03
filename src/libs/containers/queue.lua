@@ -43,7 +43,7 @@ local Queue = {
 				return nil
 			end
 			local v = self[t]
-			self[t] = nul
+			self[t] = nil
 			self.tail = t - 1
 			return v
 		end,

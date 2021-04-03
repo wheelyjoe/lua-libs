@@ -2,13 +2,7 @@ require "os"
 
 local PriorityQueue = require("libs.containers.pqueue")
 
-function printtable(t)
-	for k,v in pairs(t) do
-		print("index: ", k, "prio: ", v.prio, "data: ", v.data)
-	end
-end
-
-function test()
+local function test()
 	local input = {
 		{3, "Clear drains"},
 		{4, "Feed cat"},
@@ -40,16 +34,12 @@ function test()
 	local i = pq:peek()
 	assert(i == verify[1][2], "peek() failed")
 
-	--printtable(pq)
-
 	i = 0
 	for t, p in pq.pop, pq do
 		i = i+1
 		local v = verify[i]
 		assert(v[1] == p and v[2] == t,
 			   "pq, ordering not as expected")
-		--print("------")
-		--printtable(pq)
 	end
 
 	assert(pq:empty() == true, "pq, not empty")

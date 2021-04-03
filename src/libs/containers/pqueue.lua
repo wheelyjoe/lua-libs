@@ -12,20 +12,22 @@
 --   decrease(itemindex, deltaprio)
 --]]
 
+local function leftchild(i)
+	return 2*i
+end
+
+--[[
+local function rightchild(i)
+	return 2*i+1
+end
+--]]
+
+local function parent(i)
+	return math.floor(i/2)
+end
+
 local PriorityQueue = {
 	__index = {
-		_leftchild = function(self, i)
-			return 2*i
-		end,
-
-		_rightchild = function(self, i)
-			return 2*i+1
-		end,
-
-		_parent = function(self, i)
-			return math.floor(i/2)
-		end,
-
 		_swap = function(self, i, j)
 			local a = self[i]
 			self[i] = self[j]
@@ -33,15 +35,15 @@ local PriorityQueue = {
 		end,
 
 		_siftup   = function(self, i)
-			while i > 1 and self[self:_parent(i)].prio > self[i].prio do
-				self:_swap(i, self:_parent(i))
-				i = self:_parent(i)
+			while i > 1 and self[parent(i)].prio > self[i].prio do
+				self:_swap(i, parent(i))
+				i = parent(i)
 			end
 		end,
 
 		_siftdown = function(self, i)
-			while self:_leftchild(i) <= self:size() do
-				local m = self:_leftchild(i)
+			while leftchild(i) <= self:size() do
+				local m = leftchild(i)
 
 				if m ~= self:size() and
 					self[m+1].prio < self[m].prio then
@@ -98,15 +100,15 @@ local PriorityQueue = {
 			return self[1].data, self[1].prio
 		end,
 
-		remove = function(self, i)
+		remove = function(_--[[self, i]])
 			assert(false, "Not supported yet")
 		end,
 
-		increase = function(self, i, deltap)
+		increase = function(_ --[[self, i, deltap]])
 			assert(false, "Not supported yet")
 		end,
 
-		decrease = function(self, i, deltap)
+		decrease = function(_ --[[self, i, deltap]])
 			assert(false, "Not supported yet")
 		end,
 	},
